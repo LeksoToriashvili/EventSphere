@@ -39,18 +39,19 @@
             <div id="logo">
                 <a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt="" title=""/></a>
             </div>
-        {% if user.is_authenticated %}
-        <h3>@{{ user.username }}</h3>
-        {% endif %}
+            {% if user.is_authenticated %}
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <a href="{% url 'user_dashboard' %}">
+                        <img src="{{ user.image.url }}" alt="image not found" title="" width="30px" height="30px"/>
+                    </a>
+                    <h3>{{ user.username }}</h3>
+                </div>
+            {% endif %}
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
                     <li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Category</a></li>
-                    <li><a href="#">Price</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
-
+                    <li><a href="{% url 'event_list' %}">Events</a></li>
+                    <li><a href="{% url 'event_create' %}">Create Event</a></li>
                     {% if user.is_authenticated %}
                         <li>
                             <form action="{% url 'logout' %}" method="POST">

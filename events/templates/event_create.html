@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    Event List
+{% endblock %}
+
+{% block content %}
+    <h1>Create New Event</h1>
+    {% if user.is_organizer %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Event</button>
+    </form>
+    {% else %}
+    <h1>You are not organizer!</h1>
+    {% endif %}
+    <a href="{% url 'event_list' %}">Back to Events</a>
+{% endblock %}

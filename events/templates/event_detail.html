@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    Event
+{% endblock %}
+
+{% block content %}
+    <h1>{{ event.title }}</h1>
+    <img src="{{ event.image.url }}" alt="{{ event.title }}" style="width: 300px;">
+    <p>{{ event.description }}</p>
+    <p>Date: {{ event.date }}</p>
+    <p>Address: {{ event.address }}</p>
+
+    {% if event.has_location %}
+        <p>Coordinates: {{ event.latitude }}, {{ event.longitude }}</p>
+    {% else %}
+        <p>Location not available.</p>
+    {% endif %}
+
+    {% if event.canceled %}
+        <p style="color: red;">This event has been canceled.</p>
+    {% endif %}
+
+    <a href="{% url 'event_list' %}">Back to Events</a>
+{% endblock %}

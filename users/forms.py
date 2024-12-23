@@ -9,7 +9,7 @@ class CustomUserCreationForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'is_organizer', 'is_attendee', 'password')
+        fields = ('username', 'email', 'is_organizer', 'is_attendee', 'password', 'password2', 'image')
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password')
@@ -18,6 +18,16 @@ class CustomUserCreationForm(forms.ModelForm):
         if password1 != password2:
             raise forms.ValidationError("The two password fields must match.")
         return password2
+
+    def clean(self):
+        cleaned_data = super().clean()
+        is_organizer = cleaned_data.get('is_organizer')
+        is_attendee = cleaned_data.get('is_attendee')
+
+        if not (is_organizer or is_attendee):
+            raise forms.ValidationError("You must select at least one role(Organizer or Attendee).")
+
+        return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)

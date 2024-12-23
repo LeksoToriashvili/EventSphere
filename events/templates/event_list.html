@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    Event List
+{% endblock %}
+
+{% block content %}
+    <section class="post-area section-gap">
+        <div class="container">
+            <div class="row justify-content-center d-flex">
+                <div class="col-lg-8 post-list">
+                    {% for event in events %}
+                        {% include 'event_card.html' %}
+                    {% endfor %}
+                </div>
+                <div class="col-lg-4 sidebar">
+                    <div class="single-slidebar">
+                        <h1 style="margin-bottom: 30px;">Search Events</h1>
+                        <form method="get" action="{% url 'event_list' %}">
+                            <input type="text" name="q" value="{{ query }}"
+                                   placeholder="Search by title or description"
+                                   onfocus="this.placeholder = 'Search by title or description'"
+                                   class="common-input mb-20 form-control">
+                            <input type="text" name="address" value="{{ address_filter }}"
+                                   placeholder="Search by address"
+                                   onfocus="this.placeholder = 'Search by address'"
+                                   class="common-input mb-20 form-control">
+                            <span>Start Date</span>
+                            <input type="date" name="date" value="{{ date_filter }}"
+                                   class="common-input mb-20 form-control">
+                            <span>End Date</span>
+                            <input type="date" name="end_date" value="{{ end_date }}"
+                                   class="common-input mb-20 form-control">
+                            <button type="submit">Search</button>
+                            <div><p style="margin-top: 20px;">If you select only start time, it will search events of
+                                exact date. If you select both dates, it will search event in this range.</p></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
