@@ -36,3 +36,13 @@ class CustomUserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class CustomUserProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'is_organizer', 'is_attendee', 'image']
+        widgets = {
+            'email': forms.EmailInput(attrs={'placeholder': 'Email Address'}),
+            'username': forms.TextInput(attrs={'placeholder': 'Username'}),
+        }

@@ -28,6 +28,8 @@ urlpatterns = [
     path('', index, name='index'),
     path('events/', include('events.urls')),
     path('accounts/', include('users.urls')),
+    path('notifications/', include('notifications.urls')),
+    path('api/', include('api.urls')),
 ] + debug_toolbar_urls()
 
 if settings.DEBUG:

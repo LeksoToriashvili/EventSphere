@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    Notification
+{% endblock %}
+
+{% block content %}
+    <section class="post-area section-gap">
+
+        <div class="container">
+            <h1 style="margin-bottom: 30px">{{ notification.get_notification_type_display }}</h1>
+            <div class="row justify-content-center d-flex">
+                <div class="col-lg-8 post-list">
+                    <h5>{{ notification.message }}</h5>
+                    <small>{{ notification.timestamp }}</small>
+                </div>
+                <form method="POST" action="{% url 'notification_delete' pk=notification.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

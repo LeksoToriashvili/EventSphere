@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.timezone import now
 
-from eventsphere.settings import MEDIA_URL
+from users.models import CustomUser
 
 
 class Event(models.Model):
@@ -29,6 +29,7 @@ class Event(models.Model):
     image = models.ImageField(upload_to='event_images/', blank=True, null=True, default='img/event_default.png')
     canceled = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    liked_by = models.ManyToManyField(CustomUser, related_name='liked_events', blank=True)
 
     def __str__(self):
         return self.title
@@ -38,6 +39,9 @@ class Event(models.Model):
 
     def has_location(self):
         return self.latitude is not None and self.longitude is not None
+
+    def likes_count(self):
+        return self.liked_by.count()
 
 
 class Likes(models.Model):

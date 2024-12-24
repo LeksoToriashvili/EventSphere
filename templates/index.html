@@ -1,10 +1,37 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load cache %}
 
 
 {% block title %}
-Welcome To EventSphere
+    Welcome To EventSphere
 {% endblock %}
 
 {% block content %}
+    <section class="service-area section-gap" id="service">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 pb-40 header-text">
+                    <h1>Here are some events</h1>
+                    <p>
+                        Take a look for some events you are interested in!
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                {% for event in events %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-service">
+                            <a href="{% url 'event_detail' event.pk %}">
+                            <h4><span class="lnr lnr-bubble"></span>{{ event.title }}</h4>
+                            <p>
+                                {{ event.description }}
+                            </p>
+                                </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 {% endblock %}

@@ -7,21 +7,61 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ event.title }}</h1>
-    <img src="{{ event.image.url }}" alt="{{ event.title }}" style="width: 300px;">
-    <p>{{ event.description }}</p>
-    <p>Date: {{ event.date }}</p>
-    <p>Address: {{ event.address }}</p>
-
-    {% if event.has_location %}
-        <p>Coordinates: {{ event.latitude }}, {{ event.longitude }}</p>
-    {% else %}
-        <p>Location not available.</p>
-    {% endif %}
-
-    {% if event.canceled %}
-        <p style="color: red;">This event has been canceled.</p>
-    {% endif %}
-
-    <a href="{% url 'event_list' %}">Back to Events</a>
+    <div class="container">
+    <div class="row justify-content-center d-flex">
+        <div class="col-lg-8 post-list">
+            <img src="{{ event.image.url }}" alt="">
+            <div class="single-post d-flex flex-row">
+                <div class="details" style="margin-left: 15px;">
+                    {% if event.canceled %}
+                        <div class="title d-flex flex-row justify-content-between"
+                             style="background-color: red">
+                    {% else %}
+                        <div class="title d-flex flex-row justify-content-between">
+                    {% endif %}
+                    <div class="titles">
+                        <a href="{% url 'event_detail' event.id %}">
+                            <h4 style="width: 350px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{ event.title }}</h4>
+                        </a>
+                        <h6>{{ event.organizer }}</h6>
+                    </div>
+                    <ul class="btns">
+                        <form action="{% url 'toggle_like' event.id %}" method="post">
+                            {% csrf_token %}
+                            <li>{{ event.likes_count }}
+                                {% if liked %}
+                                <button><span class="lnr lnr-heart" style="background-color: #fffc45;"></span></button>
+                                {% else %}
+                                <button><span class="lnr lnr-heart"></span></button>
+                                {% endif %}
+                            </li>
+                        </form>
+                        <li>
+                            {% if user in event.attendees.all %}
+                                <form method="post" action="{% url 'register_event' event.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Leave</button>
+                                </form>
+                            {% else %}
+                                <form method="post" action="{% url 'register_event' event.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Join</button>
+                                </form>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    </div>
+                    <p style="width: 550px; overflow-wrap: break-word; margin-top: 15px;">{{ event.description }}</p>
+                    <h5>Date: {{ event.date }}</h5>
+                    <p class="address"><span class="lnr lnr-map"></span>Address: {{ event.address }}</p>
+                <h5>Attendess: {{ attendees_count }}</h5>
+                    {% if event.canceled %}
+                        <p class="address" style="color: red;"><span class="lnr lnr-database">   Canceled</span>
+                        </p>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

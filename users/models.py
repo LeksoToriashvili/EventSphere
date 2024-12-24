@@ -11,3 +11,20 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class Subscribers(models.Model):
+    email = models.EmailField(unique=True, verbose_name=_("Email"))
+
+    def __str__(self):
+        return self.email
+
+
+class Contact(models.Model):
+    name = models.CharField(verbose_name=_("Name"), max_length=50)
+    email = models.EmailField(verbose_name=_("Email"))
+    subject = models.CharField(verbose_name=_("Subject"), max_length=100)
+    message = models.TextField(verbose_name=_("Message"))
+
+    def __str__(self):
+        return f"{self.name} - {self.subject}"
