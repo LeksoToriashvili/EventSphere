@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
+from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DeleteView
 
 from events.forms import EventForm
@@ -18,6 +19,7 @@ def index(request):
     return render(request, 'index.html', {'events': random_events})
 
 
+@cache_page(60 * 60 * 24)
 def contact(request):
     return render(request, 'contact.html')
 

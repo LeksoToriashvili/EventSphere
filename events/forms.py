@@ -11,8 +11,6 @@ class EventForm(forms.ModelForm):
             'description',
             'date',
             'address',
-            'latitude',
-            'longitude',
             'image'
         ]
         widgets = {
