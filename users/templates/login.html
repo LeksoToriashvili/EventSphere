@@ -3,14 +3,27 @@
 
 
 {% block title %}
-Log In
+    Log In
 {% endblock %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Username"></input>
-        <input type="password" name="password" placeholder="Password"></input>
-        <button type="submit">login</button>
-    </form>
+    <section class="contact-page-area section-gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <form action="{% url "login" %}" method="post">
+                        {% csrf_token %}
+                        <div style="margin-top: 20px;">
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                                    {% csrf_token %}
+                                    <input type="text" name="username" placeholder="Username"></input>
+                                    <input type="password" name="password" placeholder="Password"></input>
+                                    <button type="submit">login</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

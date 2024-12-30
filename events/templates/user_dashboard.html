@@ -16,14 +16,14 @@
                     <h2>Organized Events</h2>
                     {% if organized_events %}
                         {% for event in organized_events %}
-                            <div style="margin-top: 30px; display: inline;">
+                            <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: right">
                             <form method="post" action="{% url 'cancel_event' pk=event.id %}">
                                 {% csrf_token %}
-                                <button type="submit">Cancel</button>
+                                <button class="ticker-btn" type="submit">Cancel</button>
                             </form>
                             <form method="post" action="{% url 'event_delete' pk=event.id %}">
                                 {% csrf_token %}
-                                <button type="submit">Delete</button>
+                                <button class="ticker-btn" type="submit">Delete</button>
                             </form>
                             </div>
                             {% include 'event_card.html' %}

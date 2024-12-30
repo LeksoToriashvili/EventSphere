@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     #third party
     'debug_toolbar',
     'rest_framework',
+    'drf_yasg',
 
     #local
     'users',

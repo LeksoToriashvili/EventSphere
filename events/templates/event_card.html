@@ -4,42 +4,47 @@
              style="width: 110px; height: 110px;">
     </div>
     <div class="details" style="margin-left: 15px;">
-    {% if event.canceled %}
-        <div class="title d-flex flex-row justify-content-between" style="background-color: red">
+        {% if event.canceled %}
+            <div class="title d-flex flex-row justify-content-between" style="background-color: red">
         {% else %}
-        <div class="title d-flex flex-row justify-content-between">
+            <div class="title d-flex flex-row justify-content-between">
         {% endif %}
-            <div class="titles">
-                <a href="{% url 'event_detail' event.id %}">
-                    <h4 style="width: 350px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{ event.title }}</h4>
-                </a>
-                <h6>{{ event.organizer }}</h6>
-            </div>
-            <ul class="btns">
-            <form action="{% url 'toggle_like' event.id %}" method="post">
-                {% csrf_token %}
-                <li>{{ event.likes_count }}<button href="#"><span class="lnr lnr-heart"></span></button></li>
-            </form>
-                <li>
+        <div class="titles">
+            <a href="{% url 'event_detail' event.id %}">
+                <h4 style="width: 350px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{ event.title }}</h4>
+            </a>
+            <h6>{{ event.organizer }}</h6>
+        </div>
+        <div class="btns">
+            <li style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; gap: 10px;">
+                <div>
+                    <form action="{% url 'toggle_like' event.id %}" method="post">
+                        {% csrf_token %}
+                        {{ event.likes_count }}
+                        <button type="submit"><span class="lnr lnr-heart"></span></button>
+                    </form>
+                </div>
+                <div>
                     {% if user in event.attendees.all %}
                         <form method="post" action="{% url 'register_event' event.id %}">
                             {% csrf_token %}
-                            <button type="submit">Leave</button>
+                            <button class="ticker-btn" type="submit">Leave</button>
                         </form>
                     {% else %}
                         <form method="post" action="{% url 'register_event' event.id %}">
                             {% csrf_token %}
-                            <button type="submit">Join</button>
+                            <button class="ticker-btn" type="submit">Join</button>
                         </form>
                     {% endif %}
-                </li>
-            </ul>
+                </div>
+            </li>
+        </div>
         </div>
         <p style="width: 550px; overflow-wrap: break-word; margin-top: 15px;">{{ event.description }}</p>
         <h5>Date: {{ event.date }}</h5>
         <p class="address"><span class="lnr lnr-map"></span>Address: {{ event.address }}</p>
-    {% if event.canceled %}
-        <p class="address" style="color: red;"><span class="lnr lnr-database">   Canceled</span></p>
-    {% endif %}
+        {% if event.canceled %}
+            <p class="address" style="color: red;"><span class="lnr lnr-database">   Canceled</span></p>
+        {% endif %}
+        </div>
     </div>
-</div>
